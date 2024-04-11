@@ -28,6 +28,15 @@ export default class PriceQuery {
     async bySymbolAndBetweenDateRange(symbol, dateStart, dateEnd) {
         const results = new QueryResult()
         const data = await this.cursor.db.findMatch((row) => {
+
+            const cDate = new Date(row.date)
+            const sDate = new Date(dateStart)
+            const eDate = new Date(dateEnd)
+            
+            // is outside of date range. skip
+            if (cDate < sDate || cDate > eDate) {
+                return
+            }
             
             if(symbol in row) {
                 results.addRow(symbol, row.date, row[symbol])
