@@ -39,7 +39,7 @@ test('query.bySymbol returns a results for AAPL', async () => {
 
 test('query.bySymbol returns a results for AMZN', async () => {
 
-    expect.assertions(2)
+    expect.assertions(3)
 
     const db = new PriceDatabase()
     await db.load(TEST_DB)
@@ -50,13 +50,16 @@ test('query.bySymbol returns a results for AMZN', async () => {
     // console.log(`${results}`)
 
     expect(results.rowCount()).toBe(11)
-    expect(results.toJSON().prices).toContain(null)
+
+    const prices = results.toJSON().prices
+    expect(prices).toContain(null)
+    expect(prices.filter((p) => p === null )).toHaveLength(1)
 
 })
 
 test('query.bySymbol returns a results for MSFT', async () => {
 
-    expect.assertions(2)
+    expect.assertions(3)
 
     const db = new PriceDatabase()
     await db.load(TEST_DB)
@@ -67,6 +70,9 @@ test('query.bySymbol returns a results for MSFT', async () => {
     // console.log(`${results}`)
 
     expect(results.rowCount()).toBe(11)
-    expect(results.toJSON().prices).toContain(null)
+
+    const prices = results.toJSON().prices
+    expect(prices).toContain(null)
+    expect(prices.filter((p) => p === null )).toHaveLength(1)
 
 })
