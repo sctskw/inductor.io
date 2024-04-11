@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test-watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
+    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test-watch": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
   },
   "keywords": [],
   "author": "",
