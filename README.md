@@ -3,12 +3,12 @@ StockPrice API
 
 
 ### Include in your project (ECMA)
-```
+```javascript
 import StockPricesAPI from 'inductor.io';
 ```
 
 ### Initialize Prices Database (via JSONL file format)
-```
+```javascript
     const api = new StockPricesAPI("/path/to/db.jsonl")
 
     try {
@@ -19,7 +19,7 @@ import StockPricesAPI from 'inductor.io';
 ```
 
 ### Retrieve Prices for Single Stock Ticker Symbol
-```
+```javascript
     const results = await api.getPricesSingle("AAPL")
 
     console.log(results.prices)
@@ -57,7 +57,7 @@ import StockPricesAPI from 'inductor.io';
 ```
 
 ### Retrieve Prices for Single Stock Ticker Symbol within a Date Range (inclusive)
-```
+```javascript
 
     const results = await api.getPricesSingle("AAPL", "1/21/2014", "1/27/2014")
 
@@ -86,7 +86,7 @@ import StockPricesAPI from 'inductor.io';
 
 
 ### Retrieve Prices for Multiple Stock Ticker Symbols
-```
+```javascript
     const results = await api.getPricesMultiple(["AAPL", "MSFT])
 
     console.log(results.prices)
