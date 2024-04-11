@@ -24,7 +24,7 @@ const results = await api.getPricesSingle("AAPL")
 
 console.log(results.prices)
 
-/** API Example Output
+// API Example Output
     {
         "dates": [
             "1/17/2014",
@@ -53,7 +53,6 @@ console.log(results.prices)
             17.91
         ]
     }
-*/
 ```
 
 ### Retrieve Prices for Single Stock Ticker Symbol within a Date Range (inclusive)
@@ -63,8 +62,7 @@ const results = await api.getPricesSingle("AAPL", "1/21/2014", "1/27/2014")
 
 console.log(result.prices)
 
-/** API Example Output
-
+// API Example Output
     {
         "dates": [
             "1/21/2014",
@@ -81,7 +79,6 @@ console.log(result.prices)
             19.66
         ]
     }
-*/
 ```
 
 
@@ -91,7 +88,7 @@ const results = await api.getPricesMultiple(["AAPL", "MSFT])
 
 console.log(results.prices)
 
-/** API Example Output
+// API Example Output
     {
         "dates": [
             "1/17/2014",
@@ -123,6 +120,5 @@ console.log(results.prices)
             ]
         }
     }
-*/
 ```
 
