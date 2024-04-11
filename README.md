@@ -84,7 +84,7 @@ console.log(result.prices)
 
 ### Retrieve Prices for Multiple Stock Ticker Symbols
 ```javascript
-const results = await api.getPricesMultiple(["AAPL", "MSFT])
+const results = await api.getPricesMultiple(["AAPL", "MSFT"])
 
 console.log(results.prices)
 
