@@ -1,7 +1,7 @@
 import path from 'path';
 
 import PriceDatabase from "."
-import PriceQuery from './query';
+import Query from './query';
 import QueryResult from './result';
 
 const TEST_DB = path.resolve('testdata/prices.jsonl');
@@ -12,7 +12,7 @@ test('query.bySymbol returns a QueryResult', async () => {
     expect.assertions(1)
 
     const db = await new PriceDatabase(TEST_DB).load()
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbol("any")
 
     expect(results).toBeInstanceOf(QueryResult)
@@ -25,7 +25,7 @@ test('query.bySymbol returns a results for AAPL', async () => {
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbol("AAPL")
 
     // console.log(`${results}`)
@@ -44,7 +44,7 @@ test('query.bySymbol returns a results for AMZN', async () => {
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbol("AMZN")
 
     // console.log(`${results}`)
@@ -63,7 +63,7 @@ test('query.bySymbol returns a results for MSFT', async () => {
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbol("MSFT")
 
     // console.log(`${results}`)
@@ -82,7 +82,7 @@ test('query.bySymbolBetweenDateRange returns results for AAPL', async () => {
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbolAndBetweenDateRange("AAPL", "1/21/2014", "1/24/2014")
 
     expect(results.rowCount()).toBe(4)
@@ -98,7 +98,7 @@ test('query.bySymbolBetweenDateRange returns results for AMZN', async () => {
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbolAndBetweenDateRange("AMZN", "1/22/2014", "1/24/2014")
 
     expect(results.rowCount()).toBe(3)
@@ -114,7 +114,7 @@ test('query.bySymbolBetweenDateRange returns results for MSFT', async () => {
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbolAndBetweenDateRange("MSFT", "1/21/2014", "1/30/2014")
 
     expect(results.rowCount()).toBe(8)
@@ -124,13 +124,13 @@ test('query.bySymbolBetweenDateRange returns results for MSFT', async () => {
     expect(prices.filter((p) => p === null )).toHaveLength(1)
 })
 
-test('query.bySymbolBetweenDateRange returns results for optional startDate and no endDate', async () => {
+test('query.bySymbolBetweenDateRange returns results for optional dateStart and no dateEnd', async () => {
 
     expect.assertions(3)
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbolAndAfterDate("MSFT", "1/27/2014")
 
     expect(results.rowCount()).toBe(6)
@@ -140,13 +140,13 @@ test('query.bySymbolBetweenDateRange returns results for optional startDate and 
     expect(prices.filter((p) => p === null )).toHaveLength(1)
 })
 
-test('query.bySymbolBetweenDateRange returns results for optional endDate and no startDate', async () => {
+test('query.bySymbolBetweenDateRange returns results for optional dateEnd and no dateStart', async () => {
 
     expect.assertions(3)
 
     const db = await new PriceDatabase(TEST_DB).load()
 
-    const query = new PriceQuery(db)
+    const query = new Query(db)
     const results = await query.bySymbolAndBeforeDate("AMZN", "1/23/2014")
 
     // console.log(`${results}`)

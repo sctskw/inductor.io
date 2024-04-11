@@ -1,6 +1,6 @@
 import QueryResult from "./result"
 
-export default class PriceQuery {
+export default class Query {
 
     constructor(database) {
 
@@ -35,7 +35,7 @@ export default class PriceQuery {
 
 
             // optional date range
-            if ( dateStart || dateEnd ) {
+            if (dateStart || dateEnd ) {
                 const cDate = new Date(row.date)
                 const sDate = new Date(dateStart)
                 const eDate = new Date(dateEnd)

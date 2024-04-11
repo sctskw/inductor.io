@@ -57,3 +57,22 @@ test('StockPrices.getPricesSingle returns results for AAPL with date range', asy
 
     expect(results.rowCount()).toBe(5)
 })
+
+test('StockPrices.getPricesMultiple throws an error with invalid symbol', async () => {
+    expect.assertions(1)
+
+    const api = await new StockPrices(TEST_DB).init()
+
+    await expect(api.getPricesMultiple(["AAPL", "MSFT", "BLAH"])).rejects.toThrow(StockSymbolNotFoundError)
+})
+
+test('StockPrices.getPricesSingle returns results for AAPL, MSFT', async () => {
+    expect.assertions(1)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesMultiple(["AAPL", "MSFT"])
+
+    console.log(`${results}`)
+
+    // expect(results.rowCount()).toBe(11)
+})

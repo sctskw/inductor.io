@@ -31,7 +31,7 @@ export default class QueryResult {
         }
         return 0
     }
-
+    
     // create serialized object 
     toJSON() {
 

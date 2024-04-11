@@ -51,8 +51,6 @@ export default class StockPrices {
             throw new StockSymbolNotFoundError(`stock symbol ${symbol} not found`)
         }
 
-        console.log(`${r}`)
-
         return r
 
     }
@@ -62,6 +60,16 @@ export default class StockPrices {
     // “dates”: An array of dates in increasing order.
     // “prices”: An object mapping (string-valued) stock ticker symbol to corresponding array of prices.  Each price array should have the same length as dates and contain the price of the corresponding ticker on each date in dates, or null for any dates in the prices file on which the stock ticker symbol does not appear.
     // If any specified stock ticker symbol is not present in the prices file, then this method should raise an exception.
-    getPricesMultiple(symbols, startDate, endDate) {}
+    async getPricesMultiple(symbols, dateStart, dateEnd) {
+        const results = []
+
+        for(let symbol of symbols) {
+            const r = await this.getPricesSingle(symbol, dateStart, dateEnd)
+            results.push(r)
+        }
+
+        return results
+
+    }
 
 }
