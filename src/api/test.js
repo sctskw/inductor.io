@@ -2,7 +2,7 @@ import path from 'path';
 
 import { FileNotFoundError, StockSymbolNotFoundError } from '../errors';
 
-import StockPrices from ".";
+import StockPrices from "../";
 
 const TEST_DB = path.resolve('testdata/prices.jsonl');
 
@@ -27,6 +27,8 @@ test('StockPrices.getPricesSingle returns results for AAPL', async () => {
 
     const api = await new StockPrices(TEST_DB).init()
     const results = await api.getPricesSingle("AAPL")
+
+    // console.log(`${results}`)
 
     expect(results.rowCount()).toBe(11)
 })
@@ -54,6 +56,8 @@ test('StockPrices.getPricesSingle returns results for AAPL with date range', asy
 
     const api = await new StockPrices(TEST_DB).init()
     const results = await api.getPricesSingle("AAPL", "1/21/2014", "1/27/2014")
+
+    console.log(`${results}`)
 
     expect(results.rowCount()).toBe(5)
 })
@@ -110,7 +114,7 @@ test('StockPrices.getPricesMultiple returns results for AAPL, MSFT with dateEnd'
     const api = await new StockPrices(TEST_DB).init()
     const results = await api.getPricesMultiple(["AAPL", "MSFT"], null, "1/28/2014")
 
-    console.log(`${results}`)
+    // console.log(`${results}`)
 
     expect(results.rowCount()).toBe(7)
     expect(results.prices['AAPL']).toHaveLength(7)
