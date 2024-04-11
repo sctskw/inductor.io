@@ -2,7 +2,7 @@ import fs from 'fs/promises'
 
 import jsonlFile from 'jsonl-db'
 
-import FileNotFoundError from '../errors'
+import { FileNotFoundError } from '../errors'
 
 
 export default class PriceLoader {

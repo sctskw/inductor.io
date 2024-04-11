@@ -123,3 +123,37 @@ test('query.bySymbolBetweenDateRange returns results for MSFT', async () => {
     expect(prices).toContain(null)
     expect(prices.filter((p) => p === null )).toHaveLength(1)
 })
+
+test('query.bySymbolBetweenDateRange returns results for optional startDate and no endDate', async () => {
+
+    expect.assertions(3)
+
+    const db = await new PriceDatabase(TEST_DB).load()
+
+    const query = new PriceQuery(db)
+    const results = await query.bySymbolAndAfterDate("MSFT", "1/27/2014")
+
+    expect(results.rowCount()).toBe(6)
+
+    const prices = results.toJSON().prices
+    expect(prices).toContain(null)
+    expect(prices.filter((p) => p === null )).toHaveLength(1)
+})
+
+test('query.bySymbolBetweenDateRange returns results for optional endDate and no startDate', async () => {
+
+    expect.assertions(3)
+
+    const db = await new PriceDatabase(TEST_DB).load()
+
+    const query = new PriceQuery(db)
+    const results = await query.bySymbolAndBeforeDate("AMZN", "1/23/2014")
+
+    console.log(`${results}`)
+
+    expect(results.rowCount()).toBe(4)
+
+    const prices = results.toJSON().prices
+    expect(prices).toContain(null)
+    expect(prices.filter((p) => p === null )).toHaveLength(1)
+})

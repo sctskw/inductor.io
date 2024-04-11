@@ -4,9 +4,9 @@ export default class PriceQuery {
 
     constructor(database) {
 
-        // if(!database.loaded) {
-        //     database.load()
-        // }
+        if(!database.loaded) {
+            database.load()
+        }
 
         this.cursor = database;
     }
@@ -33,13 +33,18 @@ export default class PriceQuery {
         const results = new QueryResult()
         const data = await this.cursor.db.findMatch((row) => {
 
-            const cDate = new Date(row.date)
-            const sDate = new Date(dateStart)
-            const eDate = new Date(dateEnd)
-            
-            // is outside of date range. skip
-            if (cDate < sDate || cDate > eDate) {
-                return
+
+            // optional date range
+            if (dateStart || dateEnd ) {
+                const cDate = new Date(row.date)
+                const sDate = new Date(dateStart)
+                const eDate = new Date(dateEnd)
+                
+                // is outside of date range. skip
+                if (cDate < sDate || cDate > eDate) {
+                    return
+                }
+                
             }
             
             if(symbol in row) {
@@ -50,5 +55,16 @@ export default class PriceQuery {
         })
         return results
     }
+
+    // execute a query by a symbol restricted to an end date
+    async bySymbolAndAfterDate(symbol, dateStart) {
+        return await this.bySymbolAndBetweenDateRange(symbol, dateStart)
+    }
+
+    // execute a query by a symbol restricted to an end date
+    async bySymbolAndBeforeDate(symbol, dateEnd) {
+        return await this.bySymbolAndBetweenDateRange(symbol, null, dateEnd)
+    }
+
 
 }

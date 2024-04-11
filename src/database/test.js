@@ -1,7 +1,7 @@
 import path from 'path';
 
 import PriceDatabase from "."
-import FileNotFoundError from '../errors';
+import { FileNotFoundError } from '../errors';
 
 const TEST_DB = path.resolve('testdata/prices.jsonl');
 
