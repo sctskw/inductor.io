@@ -1,4 +1,4 @@
-import QueryResult from "./result"
+import { QueryResult } from "./result"
 
 export default class Query {
 

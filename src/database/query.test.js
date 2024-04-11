@@ -2,7 +2,7 @@ import path from 'path';
 
 import PriceDatabase from "."
 import Query from './query';
-import QueryResult from './result';
+import { QueryResult } from './result';
 
 const TEST_DB = path.resolve('testdata/prices.jsonl');
 

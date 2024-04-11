@@ -1,11 +1,19 @@
 
-export default class QueryResult {
+export class QueryResult {
     symbol = null
     data = {}
 
+    get dates() {
+        return this.indexes()
+    }
+
+    get prices() {
+        return this.toJSON().prices
+    }
+
     // generate the keys for the query results
     indexes() {
-        return Object.keys(this.data)
+        return Object.keys(this.data).sort()
     }
 
     // add a new row to the query result
@@ -43,7 +51,7 @@ export default class QueryResult {
         }
 
         // sort ASC
-        const dates = this.indexes().sort()
+        const dates = this.indexes()
 
         for(const date of dates) {
             result.dates.push(date)
@@ -51,6 +59,75 @@ export default class QueryResult {
         }
 
         return result
+    }
+
+    // prettyprint output
+    toString() {
+        return JSON.stringify(this.toJSON(), null, 2)
+    }
+
+}
+
+export class QueryResultMulti {
+
+    data = {}
+    queries = []
+
+    get dates() {
+        return this.indexes()
+    }
+
+    get prices() {
+        return this.toJSON().prices
+    }
+
+    indexes() {
+        return Object.keys(this.data).sort()
+    }
+
+    rowCount() {
+        return this.indexes().length
+    }
+
+    // merge other QueueResults into a single object
+    merge(query) {
+
+        if(!query.hasRows()) {
+            return false
+        }
+
+        this.queries.push(query)
+
+        // keep track of all the unique dates
+        for(let date of query.indexes()) {
+            this.data[date] = true
+        }
+
+        return true
+    }
+
+   
+    toJSON() {
+
+        const data = {
+            dates: this.indexes(),
+            prices: {}
+        }
+        
+        // output spec
+        // “dates”: An array of dates in increasing order.
+        // “prices”: An object mapping (string-valued) stock ticker symbol to corresponding array of prices.  
+        // Each price array should have the same length as dates and contain the price of the corresponding ticker on each date in dates, 
+        // or null for any dates in the prices file on which the stock ticker symbol does not appear.
+        for(let q of this.queries) {
+            data.prices[q.symbol] = []
+            for(let date of data.dates) {
+                data.prices[q.symbol].push(q.data[date] || null)
+            }
+        }
+
+        return data
+
     }
 
     // prettyprint output

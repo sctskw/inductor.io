@@ -66,13 +66,13 @@ test('StockPrices.getPricesMultiple throws an error with invalid symbol', async 
     await expect(api.getPricesMultiple(["AAPL", "MSFT", "BLAH"])).rejects.toThrow(StockSymbolNotFoundError)
 })
 
-test('StockPrices.getPricesSingle returns results for AAPL, MSFT', async () => {
+test('StockPrices.getPricesMultiple returns results for AAPL, MSFT', async () => {
     expect.assertions(1)
 
     const api = await new StockPrices(TEST_DB).init()
     const results = await api.getPricesMultiple(["AAPL", "MSFT"])
 
-    console.log(`${results}`)
+    // console.log(`${results}`)
 
-    // expect(results.rowCount()).toBe(11)
+    expect(results.rowCount()).toBe(11)
 })

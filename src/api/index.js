@@ -1,5 +1,6 @@
 import PriceDatabase from "../database";
-import PriceQuery from "../database/query";
+import Query from "../database/query";
+import { QueryResultMulti } from "../database/result";
 import { StockSymbolNotFoundError } from "../errors";
 
 export default class StockPrices {
@@ -19,6 +20,8 @@ export default class StockPrices {
     // initialize the API with configuration options
     async init(config = {}) {
 
+        this.ready = false
+
         if(config.filepath) {
             this.db.filepath = filepath;
         }
@@ -36,22 +39,22 @@ export default class StockPrices {
     // If the provided stock ticker symbol is not present in the prices file, then this method should raise an exception.
     async getPricesSingle(symbol, dateStart, dateEnd) {
 
-        const q = new PriceQuery(this.db)
+        const q = new Query(this.db)
 
-        let r = null;
+        let results = null;
 
         // optional date range
         if(dateStart || dateEnd) {
-            r = await q.bySymbolAndBetweenDateRange(symbol, dateStart, dateEnd)
+            results = await q.bySymbolAndBetweenDateRange(symbol, dateStart, dateEnd)
         } else {
-            r = await q.bySymbol(symbol)
+            results = await q.bySymbol(symbol)
         }
 
-        if(!r.hasRows()) {
+        if(!results.hasRows()) {
             throw new StockSymbolNotFoundError(`stock symbol ${symbol} not found`)
         }
 
-        return r
+        return results
 
     }
 
@@ -61,11 +64,11 @@ export default class StockPrices {
     // “prices”: An object mapping (string-valued) stock ticker symbol to corresponding array of prices.  Each price array should have the same length as dates and contain the price of the corresponding ticker on each date in dates, or null for any dates in the prices file on which the stock ticker symbol does not appear.
     // If any specified stock ticker symbol is not present in the prices file, then this method should raise an exception.
     async getPricesMultiple(symbols, dateStart, dateEnd) {
-        const results = []
+        const results = new QueryResultMulti()
 
         for(let symbol of symbols) {
             const r = await this.getPricesSingle(symbol, dateStart, dateEnd)
-            results.push(r)
+            results.merge(r)
         }
 
         return results
