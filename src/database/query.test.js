@@ -149,7 +149,7 @@ test('query.bySymbolBetweenDateRange returns results for optional endDate and no
     const query = new PriceQuery(db)
     const results = await query.bySymbolAndBeforeDate("AMZN", "1/23/2014")
 
-    console.log(`${results}`)
+    // console.log(`${results}`)
 
     expect(results.rowCount()).toBe(4)
 

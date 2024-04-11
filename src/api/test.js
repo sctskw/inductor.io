@@ -20,3 +20,40 @@ test('StockPrices.getPricesSingle throws an error with invalid symbol', async ()
 
     await expect(api.getPricesSingle("BLAH")).rejects.toThrow(StockSymbolNotFoundError)
 })
+
+
+test('StockPrices.getPricesSingle returns results for AAPL', async () => {
+    expect.assertions(1)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesSingle("AAPL")
+
+    expect(results.rowCount()).toBe(11)
+})
+
+test('StockPrices.getPricesSingle returns results for AAPL with only dateStart', async () => {
+    expect.assertions(1)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesSingle("AAPL", "1/31/2014")
+
+    expect(results.rowCount()).toBe(2)
+})
+
+test('StockPrices.getPricesSingle returns results for AAPL with only dateEnd', async () => {
+    expect.assertions(1)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesSingle("AAPL", null, "1/23/2014")
+
+    expect(results.rowCount()).toBe(4)
+})
+
+test('StockPrices.getPricesSingle returns results for AAPL with date range', async () => {
+    expect.assertions(1)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesSingle("AAPL", "1/21/2014", "1/27/2014")
+
+    expect(results.rowCount()).toBe(5)
+})

@@ -9,7 +9,7 @@ export class FileNotFoundError extends Error {
 export class StockSymbolNotFoundError extends Error {
     constructor(message) {
         super(message);
-        this.name = "SymbolNotFoundError"
+        this.name = "StockSymbolNotFoundError"
     }
 }
 

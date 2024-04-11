@@ -53,6 +53,8 @@ export default class StockPrices {
 
         console.log(`${r}`)
 
+        return r
+
     }
 
     // Should take as arguments an array of string-valued stock ticker symbols, as well as optionally a start date and optionally an end date.
