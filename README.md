@@ -1,4 +1,4 @@
-StockPrice API
+StockPrices API
 ==============
 
 
