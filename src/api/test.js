@@ -76,3 +76,43 @@ test('StockPrices.getPricesMultiple returns results for AAPL, MSFT', async () =>
 
     expect(results.rowCount()).toBe(11)
 })
+
+test('StockPrices.getPricesMultiple returns results for AAPL, MSFT with date range', async () => {
+    expect.assertions(3)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesMultiple(["AAPL", "MSFT"], "1/23/2014", "1/28/2014")
+
+    // console.log(`${results}`)
+
+    expect(results.rowCount()).toBe(4)
+    expect(results.prices['AAPL']).toHaveLength(4)
+    expect(results.prices['MSFT']).toHaveLength(4)
+})
+
+test('StockPrices.getPricesMultiple returns results for AAPL, MSFT with dateStart', async () => {
+    expect.assertions(3)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesMultiple(["AAPL", "MSFT"], "1/28/2014")
+
+    // console.log(`${results}`)
+
+    expect(results.rowCount()).toBe(5)
+    expect(results.prices['AAPL']).toHaveLength(5)
+    expect(results.prices['MSFT']).toHaveLength(5)
+})
+
+
+test('StockPrices.getPricesMultiple returns results for AAPL, MSFT with dateEnd', async () => {
+    expect.assertions(3)
+
+    const api = await new StockPrices(TEST_DB).init()
+    const results = await api.getPricesMultiple(["AAPL", "MSFT"], null, "1/28/2014")
+
+    console.log(`${results}`)
+
+    expect(results.rowCount()).toBe(7)
+    expect(results.prices['AAPL']).toHaveLength(7)
+    expect(results.prices['MSFT']).toHaveLength(7)
+})
