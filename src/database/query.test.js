@@ -11,9 +11,7 @@ test('query.bySymbol returns a QueryResult', async () => {
 
     expect.assertions(1)
 
-    const db = new PriceDatabase()
-    await db.load(TEST_DB)
-
+    const db = await new PriceDatabase(TEST_DB).load()
     const query = new PriceQuery(db)
     const results = await query.bySymbol("any")
 
@@ -25,8 +23,7 @@ test('query.bySymbol returns a results for AAPL', async () => {
 
     expect.assertions(3)
 
-    const db = new PriceDatabase()
-    await db.load(TEST_DB)
+    const db = await new PriceDatabase(TEST_DB).load()
 
     const query = new PriceQuery(db)
     const results = await query.bySymbol("AAPL")
@@ -45,8 +42,7 @@ test('query.bySymbol returns a results for AMZN', async () => {
 
     expect.assertions(3)
 
-    const db = new PriceDatabase()
-    await db.load(TEST_DB)
+    const db = await new PriceDatabase(TEST_DB).load()
 
     const query = new PriceQuery(db)
     const results = await query.bySymbol("AMZN")
@@ -65,8 +61,7 @@ test('query.bySymbol returns a results for MSFT', async () => {
 
     expect.assertions(3)
 
-    const db = new PriceDatabase()
-    await db.load(TEST_DB)
+    const db = await new PriceDatabase(TEST_DB).load()
 
     const query = new PriceQuery(db)
     const results = await query.bySymbol("MSFT")
@@ -85,8 +80,7 @@ test('query.bySymbolBetweenDateRange returns results for AAPL', async () => {
 
     expect.assertions(3)
 
-    const db = new PriceDatabase()
-    await db.load(TEST_DB)
+    const db = await new PriceDatabase(TEST_DB).load()
 
     const query = new PriceQuery(db)
     const results = await query.bySymbolAndBetweenDateRange("AAPL", "1/21/2014", "1/24/2014")
@@ -102,8 +96,7 @@ test('query.bySymbolBetweenDateRange returns results for AMZN', async () => {
 
     expect.assertions(3)
 
-    const db = new PriceDatabase()
-    await db.load(TEST_DB)
+    const db = await new PriceDatabase(TEST_DB).load()
 
     const query = new PriceQuery(db)
     const results = await query.bySymbolAndBetweenDateRange("AMZN", "1/22/2014", "1/24/2014")
@@ -119,8 +112,7 @@ test('query.bySymbolBetweenDateRange returns results for MSFT', async () => {
 
     expect.assertions(3)
 
-    const db = new PriceDatabase()
-    await db.load(TEST_DB)
+    const db = await new PriceDatabase(TEST_DB).load()
 
     const query = new PriceQuery(db)
     const results = await query.bySymbolAndBetweenDateRange("MSFT", "1/21/2014", "1/30/2014")

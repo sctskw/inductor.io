@@ -3,7 +3,11 @@ import QueryResult from "./result"
 export default class PriceQuery {
 
     constructor(database) {
-        // TODO: validate database
+
+        // if(!database.loaded) {
+        //     database.load()
+        // }
+
         this.cursor = database;
     }
 

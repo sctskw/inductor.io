@@ -1,8 +1,8 @@
-import fs from 'fs/promises';
+import fs from 'fs/promises'
 
-import jsonlFile from 'jsonl-db';
+import jsonlFile from 'jsonl-db'
 
-import FileNotFoundError from '../errors';
+import FileNotFoundError from '../errors'
 
 
 export default class PriceLoader {
@@ -13,20 +13,25 @@ export default class PriceLoader {
     // store the data
     data;
 
-    async lazyLoadFile(filepath) {
+    constructor(filepath) {
+        this.filepath = filepath
+    }
 
-        if (typeof filepath !== "string") {
+    async lazyLoadFile() {
+
+        const fp = this.filepath
+
+        if (typeof fp !== "string") {
             throw new TypeError("invalid filepath")
         }
 
         try {
-            await fs.stat(filepath)
+            await fs.stat(fp)
         } catch {
             throw new FileNotFoundError("file does not exist")
         }
 
-        this.filepath = filepath
-        this.data = jsonlFile(filepath)
+        this.data = jsonlFile(fp)
 
         return true
     }

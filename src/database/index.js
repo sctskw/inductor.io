@@ -6,27 +6,27 @@ export default class PriceDatabase {
     loader = null;
     db = null;
 
-    constructor() {
-        this.loader = new PriceLoader()
+    constructor(filepath) {
+        this.loader = new PriceLoader(filepath)
     }
 
     // load: load the database from a filepath
-    async load(filepath) {
-        this.loaded = await this.loader.lazyLoadFile(filepath)
+    async load() {
+        this.loaded = await this.loader.lazyLoadFile()
         this.db = this.loader.data;
-        return true
+        return this
     }
 
     // reload: reset the database from scratch
     async reload() {
         // retrieve the current filepath
-        const file = this.loader.filepath
+        const fp = this.loader.filepath
 
         // reconstruct the loader
-        this.loader = new PriceLoader()
+        this.loader = new PriceLoader(fp)
 
         // load the file again
-        await this.loader.lazyLoadFile(file)
+        await this.loader.lazyLoadFile()
 
         // reset the database
         this.db = this.loader.data
